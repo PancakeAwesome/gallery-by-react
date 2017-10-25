@@ -28,6 +28,34 @@ html, body {
   overflow: hidden;
 
   background-color: #ddd;
+  
+  @at-root {
+    // at-root 系统mixin会在编译css文件时将内部的选择器放到最外层
+    .img-figure {
+      position: absolute;
+
+      width: 320px;
+      height: 360px;
+      margin: 0;
+      padding: 40px;
+      
+      background-color: #fff;
+
+      box-sizing: border-box;
+    }
+
+    figcaption {
+      text-align: center;
+
+      .img-title {
+        margin-top: 20px;
+
+        color: #a7a0a7;
+
+        font-size: 16px;
+      }
+    }
+  }
 }
 /* image --- end */
 
