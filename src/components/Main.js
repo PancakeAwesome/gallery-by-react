@@ -13,7 +13,7 @@ let imageDatas = require('json!../data/imageDatas.json');
  * @return random number between low and high
  */
 function getRangeRandom(low, high) {
-    return Math.ceil(Math.random() * (high - low) + low);
+    return Math.floor(Math.random() * (high - low) + low);
 }
 
 /**
@@ -21,7 +21,7 @@ function getRangeRandom(low, high) {
  * @return 0-30度之间的随机数
  */
 function get30DegRandom() {
-    return (Math.random() > 0.5 ? '' : '-') + Math.ceil(Math.random() * 30);
+    return (Math.random() > 0.5 ? '' : '-') + Math.floor(Math.random() * 30);
 }
 
 // 自调用函数：利用自执行函数，将图片名信息转成图片URL路径信息
@@ -46,13 +46,32 @@ class ControllerUnit extends React.Component {
 	}
 
 	handleClick(e) {
+		// 如果应用的是当前选中的图片，则翻转图片，否则居中
+		if (this.props.arrange.isCenter) {
+			this.props.inverse();
+		}else {
+			this.props.center();
+		}
+
 		e.preventDefault();
 		e.stopPropagation();
 	}
 
 	render() {
+		let controllerUnitClassName = 'controller-unit';
+
+		// 如果图片是居中态，显示居中态控制按钮
+		if (this.props.arrange.isCenter) {
+			controllerUnitClassName += ' is-center';
+
+			// 如果同时图片是翻转态，显示控制按钮的翻转态
+			if (this.props.arrange.isInverse) {
+				controllerUnitClassName += ' is-inverse'
+			}
+		}
+
 		return (
-			<span className="controller-unit" onClick={this.handleClick}></span>	
+			<span className={controllerUnitClassName} onClick={this.handleClick}></span>	
 		);
 	}
 }
@@ -99,6 +118,10 @@ class ImgFigure extends React.Component {
             ['MozTransform', 'msTransform', 'WebkitTransform', 'transform'].forEach(function(value) {
                 styleObj[value] = 'rotate(' + this.props.arrange.rotate + 'deg)';
             }.bind(this));
+        }
+
+        if (this.props.arrange.rotate) {
+        	styleObj.zIndex = '11';
         }
 
         // 控制反转样式
@@ -241,6 +264,7 @@ class GalleryByReactApp extends React.Component {
                 isCenter: false
             }
         }
+
         if (figureTopArr && figureTopArr[0]) {
             figureArrangeArr.splice(topIndex, 0, figureTopArr[0])
         }
@@ -309,7 +333,11 @@ class GalleryByReactApp extends React.Component {
 
             // 控制组件
             controllerUnits.push(
-            	<ControllerUnit></ControllerUnit>		
+            	<ControllerUnit key={index} 
+            	arrange={this.state.imgsArrangeArr[index]}
+            	inverse={this.inverse(index)}
+            	center={this.center(index)}>
+            	</ControllerUnit>
             );
         }.bind(this));
 
