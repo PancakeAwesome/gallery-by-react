@@ -7,6 +7,9 @@
     url("../fonts/icons/turn-arrow.svg") format("svg");
 }
 
+$imgWidth: 280px; 
+$imgHeight: 300px; 
+
 html, body {
   width: 100%;
   height: 100%;
@@ -51,8 +54,8 @@ html, body {
     .img-figure {
       position: absolute;
 
-      width: 320px;
-      height: 360px;
+      width: $imgWidth;
+      height: $imgHeight;
       margin: 0;
       padding: 40px;
 

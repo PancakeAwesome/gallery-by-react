@@ -4,6 +4,7 @@ require('styles/App.scss');
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+const headUrl = 'gallery-images2';
 let imageDatas = require('json!../data/imageDatas.json');
 
 /**
@@ -29,7 +30,7 @@ imageDatas = (function genImageURL(imageDatasArr) {
     for (let i = imageDatasArr.length - 1; i >= 0; i--) {
         let singleImageData = imageDatasArr[i];
 
-        singleImageData.imageURL = require('../images/' + singleImageData.fileName);
+        singleImageData.imageURL = require('../images/' + headUrl + '/' + singleImageData.fileName);
 
         imageDatasArr[i] = singleImageData;
     }
