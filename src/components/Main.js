@@ -4,7 +4,7 @@ require('styles/App.scss');
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-const headUrl = 'gallery-images2/';
+const headUrl = 'gallery-images1/';
 let imageDatas = require('json!../data/imageDatas.json');
 
 /**
